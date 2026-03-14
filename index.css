@@ -1,0 +1,153 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #ffffff;
+    width: 480px;
+    height: 846px;
+    box-sizing: border-box;
+    font-family: inter, sans-serif;
+    border: 2px solid green;
+}
+
+main{
+    width: 100%;
+    height: 208px;
+    display: grid;
+    background-image: url('/images/image 36.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+/* Flex items */        
+
+.header-text{
+    /* border: 1px solid tomato; */
+    display: flex;
+    align-items: center;
+    gap: 10em;
+    margin: 5em auto 3.68em ;
+}
+
+.input-container{
+    display: flex;
+    margin: 0 auto 2.63em;
+    position: relative;
+    width: 400px;
+}
+
+.icon-container{
+    margin: 12em auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* layout */   
+.input-container input{
+    width: 100%;
+    padding: 0.56em 2.5em;
+    background-color: #2E2E2F;
+    border-top-left-radius: 0.375em;
+    border-bottom-left-radius: 0.375em;
+}
+
+.input-container button{
+    position: absolute;
+    top:0;
+    right: 0;
+    background-color: #4B4B4B;
+    height: 100%;
+    padding: 0.5em 1.7em;
+    border-top-right-radius: 0.375em;
+    border-bottom-right-radius: 0.375em;
+    cursor: pointer;
+}
+
+.input-container button:hover{
+    background-color: #ffffff;
+    color: black;
+}
+
+.input-container button, .input-container input{
+    border: none;
+    color: #A5A5A5;
+}
+
+h1{
+    font-size: 1.343em;
+    font-weight: 800;
+}
+
+p{
+    font-size: 0.75em;
+    font-weight: 700;
+}
+
+/* icons */
+.fa-sistrix{
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    transform: translateY(-50%); /* Make sure to center the icon vertically */
+    color: #A5A5A5;
+}
+
+.fa-4xl{
+    font-size: 4em;
+}
+
+.icon-container p, .icon-container i{
+    color: #2E2E2F;
+}
+
+.icon-container p{
+    margin-top: 0;
+}
+
+/* .hidden{
+    display: none;
+} */
+
+@media (min-width: 481px) {
+    body{
+        width: 100%;
+    }
+
+    .header-text{
+        margin: 5.15em auto 3.68em;
+        gap: 35em;
+    }
+
+    .header-text h1{
+        font-size: 2.67em;
+        font-weight: 800;
+    }
+
+    .header-text p{
+        font-size: 0.875em;
+        font-weight: 700;
+    }
+
+    .header-text h1, .header-text p{
+        margin: 0;
+    }
+
+    .input-container{
+        width: 962px;
+    }
+
+    .input-container input{
+        width: 100%;
+        padding: 0.687em 3.5em;
+    }
+
+    .fa-4xl{
+        font-size: 6em;
+    }
+
+    .icon-container p{
+        font-size: 1.125em;
+        font-weight: 700;
+    }
+}
