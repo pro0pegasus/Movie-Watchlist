@@ -6,7 +6,7 @@ body {
     width: 480px;
     height: 846px;
     box-sizing: border-box;
-    font-family: inter, sans-serif;
+    font-family: Inter, sans-serif;
     border: 2px solid green;
 }
 
@@ -31,7 +31,7 @@ main{
 
 .input-container{
     display: flex;
-    margin: 0 auto 2.63em;
+    margin: 0 auto 1.06em;
     position: relative;
     width: 400px;
 }
@@ -41,6 +41,15 @@ main{
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.movie-card, .movie-info{
+    display: flex;
+}
+
+.movie-card{
+    justify-content: center;
+    border-bottom: 1.5px solid #2C2C2C;
 }
 
 /* layout */   
@@ -74,13 +83,84 @@ main{
     color: #A5A5A5;
 }
 
+.movie-info .watchlist-btn{
+    border: none;
+    background-color: transparent;
+    color: #ffff;
+    cursor:pointer;
+    /* transform: translateY(-50%); */
+}
+
+button .fa-circle-plus{
+    color: #ffff;
+    font-size: 1.5em;
+    font-weight: 800;
+}
+
+.movie-card{
+    margin: 1.562em 2.75em 0;
+}
+
+.movie-card img{
+    width: 99px;
+    height: 147px;
+    border-radius: 0.143em;
+    margin-bottom: 1.281em;
+}
+
+h2, .movie-details p, .movie-info{
+    margin: 0;
+}
+
+.movie-details{
+    margin: 0.937em 0 0 1.31em;
+}
+
+.movie-info{
+    margin: 0.687em 0;
+    align-items: center;
+}
+
+/* font size and weight  */
+
 h1{
     font-size: 1.343em;
     font-weight: 800;
 }
 
+h2{
+    font-size: 1.125em;
+    font-weight: 600;
+}
+
+h2 span{
+    font-size: 0.625em;
+    font-weight: 500;
+}
+
 p{
     font-size: 0.75em;
+    font-weight: 700;
+}
+
+.movie-info{
+    font-size: 0.8em;
+    gap: 0.7em;
+}
+
+.movie-description{
+    position: relative;
+    font-size: 0.8em;
+    font-weight: 400;
+    line-height: 1.25em;
+    color: #A5A5A5;
+}
+
+.btn-text{
+    position: relative;
+    left: 0;
+    bottom: 0.05rem;
+    font-size: 0.9rem;
     font-weight: 700;
 }
 
@@ -105,27 +185,42 @@ p{
     margin-top: 0;
 }
 
-/* .hidden{
+.fa-star{
+    color: rgb(255, 212, 59);
+}
+
+
+
+.hidden{
     display: none;
-} */
+}
+
+
+
+
+
 
 @media (min-width: 481px) {
     body{
         width: 100%;
     }
 
+    main{
+        width: 100%;
+    }
+
     .header-text{
-        margin: 5.15em auto 3.68em;
-        gap: 35em;
+        margin: 5.15rem auto 3.68rem;
+        gap: 35rem;
     }
 
     .header-text h1{
-        font-size: 2.67em;
+        font-size: 2.67rem;
         font-weight: 800;
     }
 
     .header-text p{
-        font-size: 0.875em;
+        font-size: 0.875rem;
         font-weight: 700;
     }
 
@@ -139,15 +234,44 @@ p{
 
     .input-container input{
         width: 100%;
-        padding: 0.687em 3.5em;
+        padding: 0.687rem 3.5rem;
     }
 
     .fa-4xl{
-        font-size: 6em;
+        font-size: 6rem;
     }
 
     .icon-container p{
-        font-size: 1.125em;
+        font-size: 1.125rem;
         font-weight: 700;
+    }
+
+    .movie-card{
+        margin: 1.562rem 10rem 0;
+    }
+
+    h2{
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
+
+    span{
+        font-size: 0.6rem;
+        font-weight: 500;
+    }
+
+    .movie-info{
+        font-size: 1rem;
+        font-weight: 400;
+    }
+
+    .movie-description{
+        font-size: 1rem;
+        font-weight: 600;
+        line-height: 1.5rem;
+    }
+    
+    .btn-text{
+        font-size: 1rem;
     }
 }
