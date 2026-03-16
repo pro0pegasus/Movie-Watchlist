@@ -7,7 +7,7 @@ body {
     height: 846px;
     box-sizing: border-box;
     font-family: Inter, sans-serif;
-    border: 2px solid green;
+    /* border: 2px solid green; */
 }
 
 main{
@@ -138,9 +138,9 @@ h2 span{
     font-weight: 500;
 }
 
-p{
+.movie-info p{
     font-size: 0.75em;
-    font-weight: 700;
+    font-weight: 600;
 }
 
 .movie-info{

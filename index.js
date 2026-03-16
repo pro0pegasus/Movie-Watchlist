@@ -28,24 +28,74 @@ steps:
 
 // make it a call back func + add it to an eventlistner for the search bar 
 
-let savedData = []
 
-fetch('https://www.omdbapi.com/?s=Blade Runner&apikey=100c0696')
-    .then(res => res.json())
-    .then(data => {
-        const id = data.Search.map(d => d.imdbID)
-        // This will 
-        for(let eachId of id){
-            fetch(`https://www.omdbapi.com/?i=${eachId}&apikey=100c0696`)
-                .then(res => res.json())
-                .then(result => {
-                    // console.log(result)
-                    for (let i=0; i< result.length; i++){
-                        savedData.push(result[i])
-                    }
+const searchBtn = document.getElementById('search-btn')
+const searchBar = document.getElementById('input-data')
+const pushData = document.getElementById('push-data')
 
-                    })
-            }
-        })
+
+
+searchBtn.addEventListener('click', async() => {
+    
+    const getFilmName = searchBar.value 
+    
+    const movies = await getMovies(getFilmName)
+    render(movies)
+    
+})
+
+function render(moviesParam){
+    
+    let html = ""
+    
+    for(let movie of moviesParam){
         
-        console.log(savedData)
+    html += `
+            <div class="movie-card">
+                <img src="${movie.Poster}" alt="Movie Poster"/>
+                <div class="movie-details">
+                    <h2>${movie.Title}
+                        <span>
+                            <i class="fa-solid fa-star"></i>
+                            ${movie.imdbRating}
+                        </span>
+                    </h2>
+                    <div class="movie-info">
+                        <p>${movie.Runtime}</p>
+                        <p>${movie.Genre}</p>
+                        <button class="watchlist-btn">
+                            <i class="fa-solid fa-circle-plus"></i>
+                            <span class="btn-text">Watchlist</span>
+                        </button>
+                    </div>
+                    <p class="movie-description">${movie.Plot}</p>
+                </div>
+            </div>
+        `
+    }
+    document.getElementById('push-data').innerHTML = html
+}
+
+
+async function getMovies(film){
+
+    const res = await fetch(`https://www.omdbapi.com/?s=${film}&apikey=100c0696`)
+    const data = await res.json()
+
+    const ids = data.Search.map(d => d.imdbID)
+    let savedData = []
+
+    
+    for(let id of ids){
+        
+        const movieRes = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=100c0696`)
+        const movie = await movieRes.json()
+
+        savedData.push(movie)
+    } 
+    return savedData
+}
+    
+
+
+
