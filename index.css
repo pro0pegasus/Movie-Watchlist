@@ -164,6 +164,16 @@ h2 span{
     font-weight: 700;
 }
 
+a{
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+a:hover{
+    color: #A5A5A5;
+    text-decoration: none;
+}
+
 /* icons */
 .fa-sistrix{
     position: absolute;

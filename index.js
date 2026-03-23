@@ -28,21 +28,110 @@ steps:
 
 // make it a call back func + add it to an eventlistner for the search bar 
 
-
+let savedData
 const searchBtn = document.getElementById('search-btn')
 const searchBar = document.getElementById('input-data')
+const movieIcon = document.getElementById('icon-container')
 const pushData = document.getElementById('push-data')
+const watchlistSection = document.getElementById('watchlist-section')
 
+const savedMovies = JSON.parse(localStorage.getItem("watchlist")) || []
 
-
-searchBtn.addEventListener('click', async() => {
-    
-    const getFilmName = searchBar.value 
-    
-    const movies = await getMovies(getFilmName)
-    render(movies)
-    
+document.addEventListener("DOMContentLoaded", function () {
+    if (watchlistSection) {
+        render2(savedMovies)
+    }
 })
+
+if (searchBtn) {
+    searchBtn.addEventListener('click', async () => {
+        movieIcon.classList.toggle('hidden')
+
+        const movies = await getMovies(searchBar.value)
+        render(movies)
+    })
+}
+
+if (pushData) {
+    pushData.addEventListener('click', (e) => {
+        const btn = e.target.closest('.watchlist-btn')
+        if (!btn) return
+
+        const movieId = btn.dataset.id
+        addToWatchlist(movieId)
+    })
+} else if (watchlistSection) {
+    watchlistSection.addEventListener('click', (e) => {
+        const btn = e.target.closest('.watchlist-btn')
+        if (!btn) return
+
+        const movieId = btn.dataset.id
+        removeFromWatchlist(movieId)
+    })
+
+}
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     if(watchlistSection){
+//          render2(savedMovies)
+//     }
+// })
+
+// searchBtn.addEventListener('click', async() => {
+    
+//     movieIcon.classList.toggle('hidden')
+
+//     const movies = await getMovies(searchBar.value)
+    
+//     render(movies)
+    
+// })
+
+//add eventlistner to watch clicks on the watchlist button:
+    // step1: get the data from the global variable where the movies are stored.
+    // step2: create another local variable to store the added movies to watchlist (localstorage)
+    // ste3: check if it is already in the watchlist, if not add it, if yes remove it from the watchlist (localstorage) or do nothing (depends on the design)
+    // step4: render the the added film to watchlist page from the local variable that has the stored specific film
+    // step: change the + to - btn in the watchlist page only
+
+// pushData.addEventListener('click', (e) => {
+//     // gets the movie id from the clicked button.
+//     const movieId = e.target.closest('.watchlist-btn').dataset.id
+
+//     if (!movieId) return
+
+//     console.log(movieId)
+//     // call the function that adds the movie to the watchlist, and pass the id as a parameter.
+//     addToWatchlist(movieId)
+//         // inside the function, call another function checks if the movie is already in the watchlist, if not add it, if yes remove it from the watchlist (localstorage) or do nothing (depends on the design)
+    
+// }) 
+
+function addToWatchlist(movieId){
+    const movieToSave = savedData.find(movie => movie.imdbID === movieId)
+
+    if (!movieToSave) return
+
+    const alreadySaved = savedMovies.some(movie => movie.imdbID === movieId)
+
+    if (alreadySaved) return
+
+    savedMovies.push(movieToSave)
+
+    localStorage.setItem("watchlist", JSON.stringify(savedMovies))
+}
+
+function removeFromWatchlist(movieId){
+    const index = savedMovies.findIndex(movie => movie.imdbID === movieId)
+
+    if (index === -1) return
+
+    savedMovies.splice(index, 1)
+
+    localStorage.setItem("watchlist", JSON.stringify(savedMovies))
+
+    render2(savedMovies)    
+}
 
 function render(moviesParam){
     
@@ -63,7 +152,7 @@ function render(moviesParam){
                     <div class="movie-info">
                         <p>${movie.Runtime}</p>
                         <p>${movie.Genre}</p>
-                        <button class="watchlist-btn">
+                        <button data-id='${movie.imdbID}' class="watchlist-btn">
                             <i class="fa-solid fa-circle-plus"></i>
                             <span class="btn-text">Watchlist</span>
                         </button>
@@ -81,10 +170,10 @@ async function getMovies(film){
 
     const res = await fetch(`https://www.omdbapi.com/?s=${film}&apikey=100c0696`)
     const data = await res.json()
-
+    
     const ids = data.Search.map(d => d.imdbID)
-    let savedData = []
 
+    savedData = []
     
     for(let id of ids){
         
@@ -96,6 +185,36 @@ async function getMovies(film){
     return savedData
 }
     
-
+function render2(moviesParam){
+    
+    let html = ""
+    
+    for(let movie of moviesParam){
+        
+    html += `
+            <div class="movie-card">
+                <img src="${movie.Poster}" alt="Movie Poster"/>
+                <div class="movie-details">
+                    <h2>${movie.Title}
+                        <span>
+                            <i class="fa-solid fa-star"></i>
+                            ${movie.imdbRating}
+                        </span>
+                    </h2>
+                    <div class="movie-info">
+                        <p>${movie.Runtime}</p>
+                        <p>${movie.Genre}</p>
+                        <button data-id='${movie.imdbID}' class="watchlist-btn">
+                            <i class="fa-solid fa-circle-minus"></i>
+                            <span class="btn-text">Watchlist</span>
+                        </button>
+                    </div>
+                    <p class="movie-description">${movie.Plot}</p>
+                </div>
+            </div>
+        `
+    }
+    document.getElementById('watchlist-section').innerHTML = html
+}
 
 
