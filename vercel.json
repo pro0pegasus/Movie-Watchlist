@@ -1,12 +1,12 @@
 { 
     "rewrites": [
         { 
-            "source": "/index.html", 
-            "destination": "/index.html" 
+            "source": "/", 
+            "destination": "/" 
         },
         { 
-            "source": "/mywatchlist.html", 
-            "destination": "/mywatchlist.html" 
+            "source": "/mywatchlist", 
+            "destination": "/" 
         }
     ] 
 }
