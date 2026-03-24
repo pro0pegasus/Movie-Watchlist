@@ -59,6 +59,12 @@ if (pushData) {
 
         const movieId = btn.dataset.id
         addToWatchlist(movieId)
+        if(addToWatchlist){
+            btn.innerHTML = `
+                <i class="fa-regular fa-circle-check"></i>
+                <span class="btn-text">Watchlist</span>
+            `
+        }
     })
 } else if (watchlistSection) {
     watchlistSection.addEventListener('click', (e) => {
