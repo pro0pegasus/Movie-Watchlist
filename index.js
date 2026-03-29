@@ -23,6 +23,7 @@ steps:
 4- make a second eventlistner that listens to addToMyWatchlist btn, and saves the the data of the movies in localstorage
 5- show the saved data(movies) in the second page (my watchlist page) from the localstorage(call render function inside the eventlistner???)
 6- change tha the + addToMyWatchlist btn to - btn (delete from watch list, which means localstorage)
+7- passe an error message to the DOM when the search is failed or unavailable
 */
 //==========================================================================//
 
@@ -141,6 +142,15 @@ function removeFromWatchlist(movieId){
 
 function render(moviesParam){
     
+    if (!moviesParam || moviesParam.length === 0) {
+        pushData.innerHTML = `
+            <div class="movie-param">
+                <h3>Unable to find what you’re looking for. Please try another search.</h3>
+            </div>
+        `
+        return
+    }
+
     let html = ""
     
     for(let movie of moviesParam){
@@ -172,25 +182,57 @@ function render(moviesParam){
 }
 
 
-async function getMovies(film){
+// async function getMovies(film){
 
-    const res = await fetch(`https://www.omdbapi.com/?s=${film}&apikey=100c0696`)
-    const data = await res.json()
+//     const res = await fetch(`https://www.omdbapi.com/?s=${film}&apikey=100c0696`)
+//     const data = await res.json()
+//     // .catch(err => {console.log("err")})
     
-    const ids = data.Search.map(d => d.imdbID)
+//     const ids = data.Search.map(d => d.imdbID)
 
-    savedData = []
+//     savedData = []
     
-    for(let id of ids){
+//     for(let id of ids){
         
-        const movieRes = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=100c0696`)
-        const movie = await movieRes.json()
+//         const movieRes = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=100c0696`)
+//         const movie = await movieRes.json()
 
-        savedData.push(movie)
-    } 
-    return savedData
+//         savedData.push(movie)
+//     } 
+//     return savedData
+// }
+
+async function getMovies(film) {
+    try {
+        const res = await fetch(`https://www.omdbapi.com/?s=${film}&apikey=100c0696`)
+        const data = await res.json()
+
+        if (data.Response === "False") {
+            throw new Error(data.Error)
+        }
+
+        const ids = data.Search.map(d => d.imdbID)
+
+        savedData = []
+
+        for (let id of ids) {
+            const movieRes = await fetch(`https://www.omdbapi.com/?i=${id}&apikey=100c0696`)
+            const movie = await movieRes.json()
+            savedData.push(movie)
+        }
+
+        return savedData
+
+    } catch (err) {
+        // showError(err.message)
+        // return []
+    }
 }
-    
+
+// function showError(message) {
+//     pushData.innerHTML = `<p class="error">${message}</p>`
+// }
+
 function render2(moviesParam){
     
     let html = ""

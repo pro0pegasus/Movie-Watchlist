@@ -200,6 +200,11 @@ a:hover{
 }
 
 
+.movie-param, .error{
+    text-align:center; 
+    color:white; 
+    margin-top:40px;
+}
 
 .hidden{
     display: none;
